@@ -933,7 +933,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/slider */ "./src/js/modules/slider.js");
 
 window.addEventListener('DOMContentLoaded', function () {
-  var slider = new _modules_slider__WEBPACK_IMPORTED_MODULE_0__["default"]('.page', '.next');
+  var slider = new _modules_slider__WEBPACK_IMPORTED_MODULE_0__["default"]('.page', '.next', '.hanson');
   slider.render();
 });
 
@@ -963,17 +963,27 @@ var Slider =
 /*#__PURE__*/
 function () {
   function Slider(page, btns) {
+    var block = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : undefined;
+
     _classCallCheck(this, Slider);
 
     this.page = document.querySelector(page);
     this.slides = this.page.children;
     this.btns = document.querySelectorAll(btns);
+
+    if (block) {
+      this.block = document.querySelector(block);
+      this.block.style.opacity = '0';
+    }
+
     this.slideIndex = 1;
   }
 
   _createClass(Slider, [{
     key: "showSlides",
     value: function showSlides(n) {
+      var _this = this;
+
       if (n > this.slides.length) {
         this.slideIndex = 1;
       }
@@ -985,6 +995,19 @@ function () {
       this.slides.forEach(function (slide) {
         slide.style.display = 'none';
       });
+
+      if (n == 3) {
+        this.block.classList.add('animated');
+        setTimeout(function () {
+          _this.block.style.opacity = '1';
+
+          _this.block.classList.add('slideInUp');
+        }, 3000);
+      } else {
+        this.block.style.opacity = '0';
+        this.block.classList.remove('slideInUp');
+      }
+
       this.slides[this.slideIndex - 1].style.display = 'block';
     }
   }, {
@@ -995,17 +1018,17 @@ function () {
   }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
       this.btns.forEach(function (btn) {
         btn.addEventListener('click', function () {
-          _this.plusSlides(1);
+          _this2.plusSlides(1);
         });
         btn.parentNode.previousElementSibling.addEventListener('click', function (e) {
           e.preventDefault();
-          _this.slideIndex = 1;
+          _this2.slideIndex = 1;
 
-          _this.showSlides(_this.slideIndex);
+          _this2.showSlides(_this2.slideIndex);
         });
       });
       this.showSlides(this.slideIndex);

@@ -1,8 +1,12 @@
 export default class Slider {
-    constructor(page, btns) {
+    constructor(page, btns, block = undefined) {
         this.page = document.querySelector(page);
         this.slides = this.page.children;
         this.btns = document.querySelectorAll(btns);
+        if (block) {
+            this.block = document.querySelector(block);
+            this.block.style.opacity = '0';
+        }
         this.slideIndex = 1;
     }
     showSlides(n) {
@@ -16,6 +20,16 @@ export default class Slider {
         this.slides.forEach(slide => {
             slide.style.display = 'none';
         });
+        if (n == 3) {   
+            this.block.classList.add('animated');
+            setTimeout(() => {
+                this.block.style.opacity = '1';
+                this.block.classList.add('slideInUp');
+            }, 3000);
+        } else {
+            this.block.style.opacity = '0';
+            this.block.classList.remove('slideInUp');
+        }
         this.slides[this.slideIndex - 1].style.display = 'block';
     }
 
@@ -24,7 +38,7 @@ export default class Slider {
     }
 
     render() {
-       this.btns.forEach(btn => {
+        this.btns.forEach(btn => {
         btn.addEventListener('click', () => {
             this.plusSlides(1);
         });
