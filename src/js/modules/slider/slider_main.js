@@ -1,13 +1,8 @@
-export default class Slider {
-    constructor(page, btns, block = undefined) {
-        this.page = document.querySelector(page);
-        this.slides = this.page.children;
-        this.btns = document.querySelectorAll(btns);
-        if (block) {
-            this.block = document.querySelector(block);
-            this.block.style.opacity = '0';
-        }
-        this.slideIndex = 1;
+import Slider from './slider';
+
+export default class MainSlider extends Slider {
+    constructor(btns, block) {
+        super(btns, block);
     }
     showSlides(n) {
         if (n > this.slides.length) {
