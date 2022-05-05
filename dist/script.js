@@ -2760,20 +2760,22 @@ module.exports = g;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _modules_playvideo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/playvideo */ "./src/js/modules/playvideo.js");
-/* harmony import */ var _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/slider/slider-mini */ "./src/js/modules/slider/slider-mini.js");
-/* harmony import */ var _modules_slider_slider_main__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/slider/slider_main */ "./src/js/modules/slider/slider_main.js");
+/* harmony import */ var _modules_difference__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/difference */ "./src/js/modules/difference.js");
+/* harmony import */ var _modules_playvideo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/playvideo */ "./src/js/modules/playvideo.js");
+/* harmony import */ var _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/slider/slider-mini */ "./src/js/modules/slider/slider-mini.js");
+/* harmony import */ var _modules_slider_slider_main__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/slider/slider_main */ "./src/js/modules/slider/slider_main.js");
+
 
 
 
 window.addEventListener('DOMContentLoaded', function () {
-  var slider = new _modules_slider_slider_main__WEBPACK_IMPORTED_MODULE_2__["default"]({
+  var slider = new _modules_slider_slider_main__WEBPACK_IMPORTED_MODULE_3__["default"]({
     btns: '.next',
     container: '.page',
     block: '.modules .hanson'
   });
   slider.render();
-  var showUpSlider = new _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_1__["default"]({
+  var showUpSlider = new _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_2__["default"]({
     container: '.showup__content-slider',
     prev: '.showup__prev',
     next: '.showup__next',
@@ -2781,7 +2783,7 @@ window.addEventListener('DOMContentLoaded', function () {
     animate: true
   });
   showUpSlider.init();
-  var modulesSlider = new _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_1__["default"]({
+  var modulesSlider = new _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_2__["default"]({
     container: '.modules__content-slider',
     prev: '.modules__info-btns .slick-prev',
     next: '.modules__info-btns .slick-next',
@@ -2789,16 +2791,92 @@ window.addEventListener('DOMContentLoaded', function () {
     animate: true
   });
   modulesSlider.init();
-  var feedSlider = new _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_1__["default"]({
+  var feedSlider = new _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_2__["default"]({
     container: '.feed__slider',
     prev: '.feed__slider .slick-prev',
     next: '.feed__slider .slick-next',
     activeClass: 'feed__item-active'
   });
   feedSlider.init();
-  var player = new _modules_playvideo__WEBPACK_IMPORTED_MODULE_0__["default"]('.showup .play', '.overlay');
+  var player = new _modules_playvideo__WEBPACK_IMPORTED_MODULE_1__["default"]('.showup .play', '.overlay');
   player.init();
+  new _modules_difference__WEBPACK_IMPORTED_MODULE_0__["default"]('.officerold', '.officernew', '.officer__card-item').init();
 });
+
+/***/ }),
+
+/***/ "./src/js/modules/difference.js":
+/*!**************************************!*\
+  !*** ./src/js/modules/difference.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Difference; });
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Difference =
+/*#__PURE__*/
+function () {
+  function Difference(oldOfficer, newOfficer, items) {
+    _classCallCheck(this, Difference);
+
+    this.oldOfficer = document.querySelector(oldOfficer);
+    this.newOfficer = document.querySelector(newOfficer);
+    this.oldItems = this.oldOfficer.querySelectorAll(items);
+    this.newItems = this.newOfficer.querySelectorAll(items);
+    this.oldCounter = 0;
+    this.newCounter = 0;
+  }
+
+  _createClass(Difference, [{
+    key: "bindTriggers",
+    value: function bindTriggers(container, items, counter) {
+      var _this = this;
+
+      container.querySelector('.plus').addEventListener('click', function () {
+        if (counter !== items.length - 2) {
+          items[_this.oldCounter].style.display = 'flex';
+          counter++;
+        } else {
+          items[counter].style.display = 'flex';
+          items[items.length - 1].remove();
+        }
+      });
+    }
+  }, {
+    key: "hideItems",
+    value: function hideItems(items) {
+      items.forEach(function (item, i, arr) {
+        if (i !== arr.length - 1) {
+          item.style.display = 'none';
+        }
+      });
+    }
+  }, {
+    key: "init",
+    value: function init() {
+      this.hideItems(this.oldItems);
+      this.hideItems(this.newItems);
+      this.bindTriggers(this.oldOfficer, this.oldItems, this.oldCounter);
+      this.bindTriggers(this.newOfficer, this.newItems, this.newCounter);
+    }
+  }]);
+
+  return Difference;
+}();
+
+
 
 /***/ }),
 

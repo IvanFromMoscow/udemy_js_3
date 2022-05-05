@@ -1,3 +1,5 @@
+import Difference from "./modules/difference";
+import Forms from "./modules/forms";
 import VideoPlayer from "./modules/playvideo";
 import MiniSlider from "./modules/slider/slider-mini";
 import MainSlider from "./modules/slider/slider_main";
@@ -31,5 +33,7 @@ window.addEventListener('DOMContentLoaded', () => {
     feedSlider.init();
     const player = new VideoPlayer('.showup .play', '.overlay');
     player.init();
+    new Difference('.officerold', '.officernew', '.officer__card-item').init();
+    new Forms('.form', 'assets/question.php').init();
 });
 
